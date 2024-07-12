@@ -9,6 +9,8 @@ app.use(methodOverride("_method"));
 app.use(express.json());
 
 
+app.use('/tracks', require('/controllers/tracks'));
+
 const server = app.listen(PORT, () =>{
     console.log("🚀 Server Listening on PORT:", PORT)
 });
