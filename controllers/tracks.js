@@ -18,7 +18,16 @@ router.get('/', async (req, res) => {
     }
 });
 router.post('/', async (req, res) => {
-    console.log(req.body)
+    console.log('POST Request',req.body)
+    const {title, artist }= req.body;
+    try {
+        const newTrack = await Track.create({title:title, artist:artist})
+        console.log('New Track:', newTrack)
+        res.end()
+    } catch (error) {
+        console.log("----- ERROR creating new track----", error);
+        res.status(500).json({ error: 'Server error' });
+    }
     res.end()
 });
 
