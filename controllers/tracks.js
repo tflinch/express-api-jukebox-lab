@@ -66,12 +66,34 @@ router.post('/', async (req, res) => {
     try {
         const newTrack = await Track.create({title:title, artist:artist})
         console.log('New Track:', newTrack)
-        res.end()
+        res.status(201).json({ success: true, track: newTrack })
     } catch (error) {
         console.log("----- ERROR creating new track----", error);
         res.status(500).json({ error: 'Server error' });
     }
-    res.end()
+});
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params
+    console.log(id)
+    try {
+        const oneTrack = await Track.deleteOne({_id: id})
+        console.log("delete Track", oneTrack)
+        res.status(200).json(oneTrack)
+    } catch (error) {
+        res.status(500).json({ error: 'Server error' });
+    }
+    // try {
+    //     const tracksFound = await Track.find({});
+    //     if (tracksFound) {
+    //         console.log('found track', tracksFound);
+    //     }
+    //     console.log(req.body.name);
+    //     res.status(200).json(tracksFound);
+    // } catch (error) {
+    //     console.error(error);
+    //     res.status(500).json({ error: 'Server error' });
+    // }
 });
 
 module.exports = router;
